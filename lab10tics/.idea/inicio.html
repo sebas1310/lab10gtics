@@ -13,7 +13,6 @@
     .image-container {
       display: inline-block;
       margin-right: 10px;
-      font-size: 20px;
     }
     .delete-button {
       cursor: pointer;
@@ -23,7 +22,7 @@
 <body>
 <h1>El Juego de la Memoria</h1>
 <h3>Total de imágenes seleccionadas: <span id="image-count">0</span></h3>
-<button id="add-button" class="btn btn-success">Agregar imágenes</button>
+<button id="anadir" class="btn btn-success">Agregar imágenes</button>
 <br>
 <br>
 <div id="image-preview"></div>
@@ -37,7 +36,7 @@
   $(document).ready(function() {
     var imageCount = 0;
 
-    $('#add-button').click(function() {
+    $('#anadir').click(function() {
       if (imageCount < 15) {
         $('<input type="file" accept=".png">').on('change', function() {
           var file = this.files[0];
