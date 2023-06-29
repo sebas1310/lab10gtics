@@ -33,16 +33,6 @@
       max-width: 200px; /* Añadido (ancho máximo de la imagen) */
       max-height: 200px; /* Añadido (altura máxima de la imagen) */
     }
-    .board-cell {
-      display: inline-block;
-      width: 100px;
-      height: 100px;
-      border: 1px solid #000;
-      margin-right: -1px;
-      margin-bottom: -1px;
-      text-align: center;
-      vertical-align: middle;
-    }
   </style>
 </head>
 <body>
@@ -53,7 +43,6 @@
 <br>
 <div id="image-preview"></div>
 <br>
-<div id="board"></div>
 
 <!--Jquery-->
 
@@ -61,80 +50,110 @@
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
 <script>
-  $(document).ready(function() {
-    var imageCount = 0;
+    $(document).ready(function() {
+        var imageCount = 0;
 
-    $('#add-button').click(function() {
-      if (imageCount < 15) {
-        $('<input type="file" accept=".png" multiple>').on('change', function() {
-          var files = this.files;
-          for (var i = 0; i < files.length; i++) {
-            var file = files[i];
-            if (file) {
-              var reader = new FileReader();
-              reader.onload = function(e) {
-                var imageSrc = e.target.result;
-                var imageContainer = $('<div class="image-container"><img src="' + imageSrc + '"><span class="delete-button">X</span></div>');
-                imageContainer.find('.delete-button').click(function() {
-                  imageContainer.remove();
-                  imageCount--;
-                  $('#image-count').text(imageCount);
-                });
-                $('#image-preview').append(imageContainer);
-                imageCount++;
-                $('#image-count').text(imageCount);
-                if (imageCount === 15) {
-                  $('#add-button').prop('disabled', true);
-                }
-                if (imageCount >= 2) {
-                  generateBoard(imageCount * 2);
-                }
-              };
-              reader.readAsDataURL(file);
+        $('#add-button').click(function() {
+            if (imageCount < 15) {
+                $('<input type="file" accept=".png">').on('change', function() {
+                    var file = this.files[0];
+                    if (file) {
+                        var reader = new FileReader();
+                        reader.onload = function(e) {
+                            var imageSrc = e.target.result;
+                            var imageContainer = $('<div class="image-container"><img src="' + imageSrc + '"><span class="delete-button">X</span></div>');
+                            imageContainer.find('.delete-button').click(function() {
+                                imageContainer.remove();
+                                imageCount--;
+                                $('#image-count').text(imageCount);
+                            });
+                            $('#image-preview').append(imageContainer);
+                            imageCount++;
+                            $('#image-count').text(imageCount);
+                        }
+                        reader.readAsDataURL(file);
+                    }
+                }).click();
+            } else {
+                alert('Ya se han agregado la cantidad máxima de imágenes.');
             }
-          }
-        }).click();
-      } else {
-        alert('Ya se han agregado la cantidad máxima de imágenes.');
-      }
+        });
     });
 
-    function generateBoard(imageCount) {
-      var rows, cols;
-      var boardSize = imageCount / 2;
-      for (var i = 1; i <= boardSize; i++) {
-        if (boardSize % i === 0 && (Math.abs(i - (boardSize / i)) <= 1)) {
-          rows = i;
-          cols = boardSize / i;
-        }
-      }
-      var indices = [];
-      for (var i = 0; i < imageCount; i++) {
-        indices.push(i);
-      }
-      shuffleArray(indices);
-      var board = $('#board');
-      board.empty();
-      for (var i = 0; i < rows; i++) {
-        var row = $('<div class="board-row"></div>');
-        for (var j = 0; j < cols; j++) {
-          var index = indices[i * cols + j];
-          var imageContainer = $('<div class="image-container"><img src="images/Arbok.png"></div>');
-          row.append(imageContainer);
-        }
-        board.append(row);
-      }
-    }
+    /*$(document).ready(function() {
+      var imageCount = 0;
 
-    function shuffleArray(array) {
-      for (var i = array.length - 1; i > 0; i--) {
-        var j = Math.floor(Math.random() * (i + 1));
-        var temp = array[i];
-        array[i] = array[j];
-        array[j] = temp;
+      $('#add-button').click(function() {
+        if (imageCount < 15) {
+          $('<input type="file" accept=".png" multiple>').on('change', function() {
+            var files = this.files;
+            for (var i = 0; i < files.length; i++) {
+              var file = files[i];
+              if (file) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                  var imageSrc = e.target.result;
+                  var imageContainer = $('<div class="image-container"><img src="' + imageSrc + '"><span class="delete-button">X</span></div>');
+                  imageContainer.find('.delete-button').click(function() {
+                    imageContainer.remove();
+                    imageCount--;
+                    $('#image-count').text(imageCount);
+                  });
+                  $('#image-preview').append(imageContainer);
+                  imageCount++;
+                  $('#image-count').text(imageCount);
+                  if (imageCount === 15) {
+                    $('#add-button').prop('disabled', true);
+                  }
+                  if (imageCount >= 2) {
+                    generateBoard(imageCount * 2);
+                  }
+                };
+                reader.readAsDataURL(file);
+              }
+            }
+          }).click();
+        } else {
+          alert('Ya se han agregado la cantidad máxima de imágenes.');
+        }
+      });
+
+      function generateBoard(imageCount) {
+        var rows, cols;
+        var boardSize = imageCount / 2;
+        for (var i = 1; i <= boardSize; i++) {
+          if (boardSize % i === 0 && (Math.abs(i - (boardSize / i)) <= 1)) {
+            rows = i;
+            cols = boardSize / i;
+          }
+        }
+        var indices = [];
+        for (var i = 0; i < imageCount; i++) {
+          indices.push(i);
+        }
+        shuffleArray(indices);
+        var board = $('#board');
+        board.empty();
+        for (var i = 0; i < rows; i++) {
+          var row = $('<div class="board-row"></div>');
+          for (var j = 0; j < cols; j++) {
+            var index = indices[i * cols + j];
+            var imageContainer = $('<div class="image-container"><img src="images/Arbok.png"></div>');
+            row.append(imageContainer);
+          }
+          board.append(row);
+        }
       }
-    }
-  });
+
+      function shuffleArray(array) {
+        for (var i = array.length - 1; i > 0; i--) {
+          var j = Math.floor(Math.random() * (i + 1));
+          var temp = array[i];
+          array[i] = array[j];
+          array[j] = temp;
+        }
+      }
+    }); */
 
 
 </script>
