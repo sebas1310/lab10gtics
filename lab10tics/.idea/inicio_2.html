@@ -70,16 +70,19 @@
 <div class="d-flex justify-content-center">
   <a class="btn btn-success" id ="start" style="display: none; margin-left: 10px">Iniciar Juego</a>
 </div>
+
 <!--Jquery-->
 
 <!--Importamos JQUERY-->
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
 <script>
+   var arr=[];
+
   $(document).ready(function() {
     var imageCount = 0;
-    let arr = []
     $('#add-button').click(function() {
+
       if (imageCount < 15) {
         $('<input type="file" accept=".png" multiple>').on('change', function() {
           var files = this.files;
@@ -90,8 +93,8 @@
               var reader = new FileReader();
               reader.onload = function(e) {
                 var imageSrc = e.target.result;
-                arr[i]=e.target.result;
                 var imageContainer = $('<div class="image-container"><img src="' + imageSrc + '"><span class="delete-button">X</span></div>');
+                arr.push(imageSrc);
                 imageContainer.find('.delete-button').click(function() {
                   imageContainer.remove();
                   imageCount--;
@@ -144,7 +147,7 @@
                 for (let n = 0; n < valor_fila; n++) {
                   for (let m = 0; m < valor_columna; m++) {
                     // const nro_filas = `<div class='col'>Imagen ${count}</div>`;
-                    const nro_filas = `<div class='col md-1' style="margin-bottom: 10px"><img src='+ ${arr[i]} +' width="200rem" height="200rem"></div>`;
+                    const nro_filas = `<div class='col md-1' style="margin-bottom: 10px"><img src="cuadro.jpg" width="200rem" height="200rem"></div>`;
                     columnas += nro_filas;
                     count++;
                   }
@@ -153,6 +156,8 @@
                 contenedor.append(nuevodiv);
                 const contenedor2 = document.getElementById("div1");
                 contenedor2.innerHTML = columnas;
+
+
                 $("#start").show(true);
 
                 if (imageCount === 15) {
