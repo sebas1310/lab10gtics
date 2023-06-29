@@ -77,24 +77,24 @@
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
 <script>
-  var arreglo_1 = [];
+  let arreglo_1 = [];
   $(document).ready(function() {
-    var imageCount = 0;
+    let imageCount = 0;
     let arr = []
     $('#add-button').click(function() {
       if (imageCount < 15) {
         $('<input type="file" accept=".png" multiple>').on('change', function() {
-          var files = this.files;
+          let files = this.files;
 
-          for (var i = 0; i < files.length; i++) {
+          for (let i = 0; i < files.length; i++) {
             var file = files[i];
             if (file) {
-              var reader = new FileReader();
+              let reader = new FileReader();
               reader.onload = function(e) {
-                var imageSrc = e.target.result;
+                let imageSrc = e.target.result;
                 arreglo_1.push(imageSrc);
 
-                var imageContainer = $('<div class="image-container"><img src="' + imageSrc + '"><span class="delete-button">X</span></div>');
+                let imageContainer = $('<div class="image-container"><img src="' + imageSrc + '"><span class="delete-button">X</span></div>');
                 imageContainer.find('.delete-button').click(function() {
                   imageContainer.remove();
                   imageCount--;
@@ -162,7 +162,7 @@
                   $('#add-button').prop('disabled', true);
                 }
                 if (imageCount >= 2) {
-                  generateBoard(imageCount * 2);
+                  crtable(imageCount * 2);
                 }
               };
               reader.readAsDataURL(file);
@@ -226,40 +226,40 @@
       const contenedor2 = document.getElementById("div1");
       contenedor2.innerHTML = columnas;
 
-      generateBoard(valor * 2);
+      crtable(valor * 2);
     });
 
-    function generateBoard(imageCount) {
-      var rows, cols;
-      var boardSize = imageCount / 2;
-      for (var i = 1; i <= boardSize; i++) {
+    function crtable(imageCount) {
+      let rows, cols;
+      let boardSize = imageCount / 2;
+      for (let i = 1; i <= boardSize; i++) {
         if (boardSize % i === 0 && (Math.abs(i - (boardSize / i)) <= 1)) {
           rows = i;
           cols = boardSize / i;
         }
       }
-      var indices = [];
-      for (var i = 0; i < imageCount; i++) {
+      let indices = [];
+      for (let i = 0; i < imageCount; i++) {
         indices.push(i);
       }
       shuffleArray(indices);
-      var board = $('#board');
+      let board = $('#board');
       board.empty();
-      for (var i = 0; i < rows; i++) {
-        var row = $('<div class="board-row"></div>');
-        for (var j = 0; j < cols; j++) {
-          var index = indices[i * cols + j];
-          var imageContainer = $('<div class="image-container"><img src="images/Arbok.png"></div>');
+      for (let i = 0; i < rows; i++) {
+        let row = $('<div class="board-row"></div>');
+        for (let j = 0; j < cols; j++) {
+          let index = indices[i * cols + j];
+          let imageContainer = $('<div class="image-container"><img src="images/Arbok.png"></div>');
           row.append(imageContainer);
         }
         board.append(row);
       }
     }
 
-    function shuffleArray(array) {
-      for (var i = array.length - 1; i > 0; i--) {
-        var j = Math.floor(Math.random() * (i + 1));
-        var temp = array[i];
+    function mezclar(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        let j = Math.floor(Math.random() * (i + 1));
+        let temp = array[i];
         array[i] = array[j];
         array[j] = temp;
       }
