@@ -67,6 +67,7 @@
 <!--    <input id="valor" value="14"></input>-->
 
   </div>
+<button id ="start" style="display: none;">gerverv</button>
 <!--Jquery-->
 
 <!--Importamos JQUERY-->
@@ -139,7 +140,7 @@
                 for (let n = 0; n < valor_fila; n++) {
                   for (let m = 0; m < valor_columna; m++) {
                     // const nro_filas = `<div class='col'>Imagen ${count}</div>`;
-                    const nro_filas = `<div class='col card'>Imagen ${count}</div>`;
+                    const nro_filas = `<div class='col md-1' style="margin-bottom: 10px"><img src="cuadro.jpg" width="200rem" height="200rem"></div>`;
                     columnas += nro_filas;
                     count++;
                   }
@@ -148,6 +149,7 @@
                 contenedor.append(nuevodiv);
                 const contenedor2 = document.getElementById("div1");
                 contenedor2.innerHTML = columnas;
+                
                 if (imageCount === 15) {
                   $('#add-button').prop('disabled', true);
                 }
