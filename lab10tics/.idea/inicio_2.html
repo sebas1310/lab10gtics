@@ -69,6 +69,7 @@
   </div>
 <div class="d-flex justify-content-center">
   <a class="btn btn-success" id ="start" style="display: none; margin-left: 10px">Iniciar Juego</a>
+  <a class="btn btn-success" id ="addbtn" style="display: none; margin-left: 10px">Agregar elementos al tablero</a>
 </div>
 <!--Jquery-->
 
@@ -144,7 +145,7 @@
                 for (let n = 0; n < valor_fila; n++) {
                   for (let m = 0; m < valor_columna; m++) {
                     // const nro_filas = `<div class='col'>Imagen ${count}</div>`;
-                    const nro_filas = `<div class='col md-1' style="margin-bottom: 10px"><img src='+ ${arr[i]} +' width="200rem" height="200rem"></div>`;
+                    const nro_filas = `<div class='col md-1' style="margin-bottom: 10px"><img src="cuadro.jpg" width="200rem" height="200rem"></div>`;
                     columnas += nro_filas;
                     count++;
                   }
@@ -154,6 +155,7 @@
                 const contenedor2 = document.getElementById("div1");
                 contenedor2.innerHTML = columnas;
                 $("#start").show(true);
+                $("#addbtn").show(true);
 
                 if (imageCount === 15) {
                   $('#add-button').prop('disabled', true);
