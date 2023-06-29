@@ -61,15 +61,15 @@
 <br>
 <!--<div id="board"></div>-->
 
-  <div class="container text-center" id="contenedor">
+<div class="container text-center" id="contenedor">
 
-    <!--iterar este valor para hacer pruebas-->
-<!--    <input id="valor" value="14"></input>-->
+  <!--iterar este valor para hacer pruebas-->
+  <!--    <input id="valor" value="14"></input>-->
 
-  </div>
+</div>
 <div class="d-flex justify-content-center">
-  <a class="btn btn-success" id ="start" style="display: none; margin-left: 10px">Iniciar Juego</a>
-  <a class="btn btn-success" id ="addbtn" style="display: none; margin-left: 10px">Agregar elementos al tablero</a>
+  <a class="btn btn-success" id="start" style="display: none; margin-left: 10px">Iniciar Juego</a>
+  <a class="btn btn-success" id="addbtn" style="display: none; margin-left: 10px">Aleatorizar</a>
 </div>
 <!--Jquery-->
 
@@ -146,8 +146,7 @@
 
                 for (let n = 0; n < valor_fila; n++) {
                   for (let m = 0; m < valor_columna; m++) {
-                    // const nro_filas = `<div class='col'>Imagen ${count}</div>`;
-                    const nro_filas = `<div class='col md-1' style="margin-bottom: 10px"><img src="cuadro.jpg" width="200rem" height="200rem"></div>`;
+                    const nro_filas = `<div class='col md-1' style="margin-bottom: 10px"><img src="${arreglo_1[(n * valor_columna + m) % valor]}" width="200rem" height="200rem"></div>`;
                     columnas += nro_filas;
                     count++;
                   }
@@ -176,6 +175,58 @@
         alert('Ya se han agregado la cantidad máxima de imágenes.');
       }
 
+    });
+
+    $('#addbtn').click(function() {
+      const valor = parseInt(document.getElementById("image-count").textContent);
+
+      const dobleValor = valor * 2;
+
+      const contenedor = document.getElementById("contenedor");
+
+      const nuevodiv = document.createElement("div");
+
+      let valor_fila = 0;
+      let valor_columna = 0;
+
+      // Encontrar los divisores más cercanos al valor doble
+      for (let i = Math.floor(Math.sqrt(dobleValor)); i >= 2; i--) {
+        if (dobleValor % i === 0) {
+          valor_fila = i;
+          valor_columna = dobleValor / i;
+          break;
+        }
+      }
+
+      // Verificar si el número de columnas es mayor que el número de filas
+      if (valor_columna > valor_fila) {
+        [valor_fila, valor_columna] = [valor_columna, valor_fila];
+      }
+
+      // Verificar el caso especial para el valor 1
+      if (valor === 1) {
+        valor_fila = 2;
+        valor_columna = 1;
+      }
+
+      contenedor.innerHTML = `<div id='div1' class='row row-cols-${valor_columna}'></div>`;
+
+      let columnas = "";
+      let count = 1; // Contador para el nombre de imagen
+
+      for (let n = 0; n < valor_fila; n++) {
+        for (let m = 0; m < valor_columna; m++) {
+          const nro_filas = `<div class='col md-1' style="margin-bottom: 10px"><img src="${arreglo_1[(n * valor_columna + m) % valor]}" width="200rem" height="200rem"></div>`;
+          columnas += nro_filas;
+          count++;
+        }
+      }
+
+      contenedor.append(nuevodiv);
+      const contenedor2 = document.getElementById("div1");
+      contenedor2.innerHTML = columnas;
+
+      generateBoard(valor * 2);
     });
 
     function generateBoard(imageCount) {
@@ -213,22 +264,8 @@
         array[j] = temp;
       }
     }
-            console.log(arreglo_1);
-  }
-
-
-  );
-
-
-
-
-
-
-
-
+    console.log(arreglo_1);
+  });
 </script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
-        crossOrigin="anonymous"></script>
 </body>
 </html>
