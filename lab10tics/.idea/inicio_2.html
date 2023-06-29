@@ -67,7 +67,9 @@
 <!--    <input id="valor" value="14"></input>-->
 
   </div>
-<button id ="start" style="display: none;">gerverv</button>
+<div class="d-flex justify-content-center">
+  <a class="btn btn-success" id ="start" style="display: none; margin-left: 10px">Iniciar Juego</a>
+</div>
 <!--Jquery-->
 
 <!--Importamos JQUERY-->
@@ -149,7 +151,7 @@
                 contenedor.append(nuevodiv);
                 const contenedor2 = document.getElementById("div1");
                 contenedor2.innerHTML = columnas;
-                
+                $("#start").show(true);
                 if (imageCount === 15) {
                   $('#add-button').prop('disabled', true);
                 }
