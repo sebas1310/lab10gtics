@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>EL JUEGO DE LA MEMORA</title>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0
+.0/css/bootstrap.min.css">
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min
+.js"></script>
+  <!-- Popper JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/p
+opper.min.js"></script>
+  <!-- Latest compiled JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.
+min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+</head>
+<body>
+<div class="container mt-3">
+  <h1  class="mt-3" style="font-weight: bold">El juego de la memoria</h1>
+  <h4 class="mt-3" id ="contadorpokemonsss" style="font-weight: bold">Total de imagenes seleccionadas: 0</h4>
+
+  <div class="container-fluid" id="divpalab">
+    <label for="subir" class="btn mt-3 labfor"
+           style="background-color: green; color: white">Agregar Imagenes</label>
+    <input type="file" id="subir" accept="image/png" style="display: none">
+  </div>
+  <div class="row flex-box" id="imagenes"></div>
+
+
+  <h6 class="mt-5" style="font-weight: bold">Este es el tablero de Juego</h6>
+  <div id="tablero">
+    <div class="row flex-box" id="tablero2"></div>
+
+
+  </div>
+  <div id="stargame"></div>
+  <div id="Randomize">
+
+  </div>
+  <div id="Ayuda">
+  </div>
+</div>
+<script>
+
+  $(document).ready(function (){
+    var numerodePokemones = 0;
+    var contadortotalimagenes = 0;
+    let principal = document.getElementById('imagenes');
+    let imagenasubir = document.getElementById('subir');
+    let labeldelinput = $(".labfor");
+    var divforlab = document.getElementById("divpalab");
+    const limite = 15;
+    var tablero = document.getElementById("tablero");
+    imagenasubir.addEventListener('change',(event)=>{
+      const file = event.target.files[0]
+
+      var creaDivmenor = document.createElement("div");
+      creaDivmenor.classList.add('col-md-3','mt-3');
+      creaDivmenor.id = contadortotalimagenes+1;
+
+      var divparaboton = document.createElement("div");
+      divparaboton.classList.add('container-fluid');
+      divparaboton.style.display = 'flex';
+      divparaboton.style.justifyContent='flex-end';
+      divparaboton.id= "divparaboton";
+
+      var botonborrar = document.createElement("button");
+      botonborrar.style.backgroundColor='white';
+      botonborrar.textContent='X';
+      botonborrar.id= contadortotalimagenes+1;
+      botonborrar.classList.add("botonborrar");
+
+      divparaboton.appendChild(botonborrar);
+      creaDivmenor.appendChild(divparaboton);
+
+      var imagenpuesta = document.createElement("img");
+      imagenpuesta.classList.add('img-fluid');
+      imagenpuesta.classList.add('pokemonimagen');
+      imagenpuesta.id = 'pokemon'+contadortotalimagenes+1;
+      var reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = function(e) {
+        imagenpuesta.src = e.target.result;
+      }
+
+      numerodePokemones++;
+      contadortotalimagenes++;
+
+      var contadorhtml = document.getElementById("contadorpokemonsss");
+      contadorhtml.textContent = "Total de imágenes selecciondas: " +numerodePokemones;
+
+      creaDivmenor.appendChild(imagenpuesta);
+      principal.appendChild(creaDivmenor);
+
+
+      botonborrar.addEventListener('click',()=>{
+        alert(("BOTONN FUNCIONAAA"+botonborrar.id));
+        $(creaDivmenor).remove();
+        numerodePokemones--;
+        contadorhtml.textContent ="Total de imágenes seleccionadas: "+numerodePokemones;
+        if(numerodePokemones<limite){
+          var labb = document.querySelector(".labfor");
+          if (labb){
+            alert("GMDAMWDOASOD");
+          }
+          else {
+            $(divforlab).prepend('<label for="subir" class="btn mt-3 labfor" style="background-color: green; color: white">Agregar Imagenes</label>');
+          }
+        }
+        var listaimagenes = document.querySelectorAll("img.pokemonimagen");
+        console.log(listaimagenes);
+      })
+
+      if(numerodePokemones>=limite){
+        labeldelinput.hidden = true;
+        var labb = document.querySelector(".labfor");
+        alert("Se ha alcanzado el número máximo de imágenes");
+        $(labb).remove();
+      }
+      else{
+        var labb = document.querySelector(".labfor");
+        if (labb){
+          alert("SIIIII");
+        }
+        else {
+          divforlab.prepend('<label for="subir" class="btn mt-3 labfor" style="background-color: green; color: white">Agregar Imagenes</label>')
+
+        }
+      }
+
+
+
+    })
+
+  })
+
+
+</script>
+</body>
+</html>
