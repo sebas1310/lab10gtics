@@ -69,6 +69,7 @@
     </div>
     <div class="d-flex justify-content-center">
       <a class="btn btn-success" id ="start" style="display: none; margin-left: 10px">Iniciar Juego</a>
+      <a class="btn btn-success" id ="addbtn" style="display: none; margin-left: 10px">Agregar elementos al tablero</a>
     </div>
     <!--Jquery-->
 
@@ -96,6 +97,7 @@
                     var imageSrc = e.target.result;
 
                     arreglo_1.push(imageSrc);
+                    console.log(arreglo_1)
                     arr[i]=e.target.result;
                     var imageContainer = $('<div class="image-container"><img src="' + imageSrc + '"><span class="delete-button">X</span></div>');
                     imageContainer.find('.delete-button').click(function() {
@@ -160,6 +162,9 @@
                     const contenedor2 = document.getElementById("div1");
                     contenedor2.innerHTML = columnas;
                     $("#start").show(true);
+                    $("#addbtn").show(true);
+
+
 
                     if (imageCount === 15) {
                       $('#add-button').prop('disabled', true);
