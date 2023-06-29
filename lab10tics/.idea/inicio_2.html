@@ -77,6 +77,7 @@
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
 <script>
+  var arreglo_1 = [];
   $(document).ready(function() {
     var imageCount = 0;
     let arr = []
@@ -91,7 +92,8 @@
               var reader = new FileReader();
               reader.onload = function(e) {
                 var imageSrc = e.target.result;
-                arr[i]=e.target.result;
+                arreglo_1.push(imageSrc);
+
                 var imageContainer = $('<div class="image-container"><img src="' + imageSrc + '"><span class="delete-button">X</span></div>');
                 imageContainer.find('.delete-button').click(function() {
                   imageContainer.remove();
@@ -211,7 +213,11 @@
         array[j] = temp;
       }
     }
-  });
+            console.log(arreglo_1);
+  }
+
+
+  );
 
 
 
