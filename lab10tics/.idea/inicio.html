@@ -13,19 +13,35 @@
     .image-container {
       display: inline-block;
       margin-right: 10px;
+      position: relative;
     }
     .delete-button {
       cursor: pointer;
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      width: 20px;
+      height: 20px;
+      background-color: #f00;
+      color: #fff;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 20px;
+      font-size: 12px;
+    }
+    .image-container img {
+      max-width: 200px; /* Añadido (ancho máximo de la imagen) */
+      max-height: 200px; /* Añadido (altura máxima de la imagen) */
     }
   </style>
 </head>
 <body>
 <h1>El Juego de la Memoria</h1>
-<h3>Total de imágenes seleccionadas: <span id="image-count">0</span></h3>
+<h3>Total de imágenes seleccionadas: <span id="contador">0</span></h3>
 <button id="anadir" class="btn btn-success">Agregar imágenes</button>
 <br>
 <br>
-<div id="image-preview"></div>
+<div id="imagen"></div>
 
 <!--Jquery-->
 
@@ -34,10 +50,10 @@
 
 <script>
   $(document).ready(function() {
-    var imageCount = 0;
+    var contador1 = 0;
 
     $('#anadir').click(function() {
-      if (imageCount < 15) {
+      if (contador1 < 15) {
         $('<input type="file" accept=".png">').on('change', function() {
           var file = this.files[0];
           if (file) {
@@ -47,18 +63,18 @@
               var imageContainer = $('<div class="image-container"><img src="' + imageSrc + '"><span class="delete-button">X</span></div>');
               imageContainer.find('.delete-button').click(function() {
                 imageContainer.remove();
-                imageCount--;
-                $('#image-count').text(imageCount);
+                contador1--;
+                $('#contador').text(contador1);
               });
-              $('#image-preview').append(imageContainer);
-              imageCount++;
-              $('#image-count').text(imageCount);
+              $('#imagen').append(imageContainer);
+              contador1++;
+              $('#contador').text(contador1);
             }
             reader.readAsDataURL(file);
           }
         }).click();
       } else {
-        alert('Ya se han agregado la cantidad máxima de imágenes.');
+        alert('Ya se agregó la cantidad máxima de imágenes');
       }
     });
   });
