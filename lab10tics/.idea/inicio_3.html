@@ -85,23 +85,29 @@
                 if (file) {
                   var reader = new FileReader();
                   reader.onload = function(e) {
-                    var imageSrc = e.target.result;
-                    images.push(imageSrc);
-                    var imageContainer = $('<div class="image-container"><img src="' + imageSrc + '"><span class="delete-button">X</span></div>');
-                    imageContainer.find('.delete-button').click(function() {
+                    var imageContainer = $('<div class="image-container"></div>');
+                    var deleteButton = $('<div class="delete-button">X</div>');
+                    imageContainer.append(deleteButton);
+                    var image = $('<img>').attr('src', e.target.result);
+                    imageContainer.append(image);
+                    images.push(e.target.result);
+
+                    deleteButton.click(function() {
                       imageContainer.remove();
                       imageCount--;
                       $('#image-count').text(imageCount);
+                      images.splice(images.indexOf(e.target.result), 1);
                     });
+
                     $('#image-preview').append(imageContainer);
 
                     imageCount++;
-
                     $('#image-count').text(imageCount);
 
                     if (imageCount === 15) {
                       $('#add-button').prop('disabled', true);
                     }
+
                     if (imageCount >= 2) {
                       generateBoard(imageCount * 2);
                     }
@@ -134,6 +140,13 @@
             for (var j = 0; j < cols; j++) {
               var card = $('<div class="card"><img class="card-image" src="' + images[imageIndex] + '"></div>');
               row.append(card);
+
+              // Llenar dos espacios de la matriz con la imagen cargada
+              var boardCell1 = $('<div class="board-cell">' + '<img class="board-image" src="' + images[imageIndex] + '"></div>');
+              row.append(boardCell1);
+
+              var boardCell2 = $('<div class="board-cell">' + '<img class="board-image" src="' + images[imageIndex] + '"></div>');
+              row.append(boardCell2);
 
               imageIndex++;
               if (imageIndex === imageCount) {
